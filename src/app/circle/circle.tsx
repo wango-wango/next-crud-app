@@ -17,6 +17,8 @@ const generateRandomColour = () => {
   );
 };
 
+const generateSpeed = () => gsap.utils.random(100, 700);
+
 const Circle: React.FC<CircleProps> = ({
   name,
   x,
@@ -25,13 +27,13 @@ const Circle: React.FC<CircleProps> = ({
   maxX,
   maxY,
 }) => {
-  let lastFinal: { x: number; y: number } | any = null;
+  let lastFinal: { x: number; y: number } = { x: 0, y: 0 };
   const [bgColour, setBgColour] = useState<string>(() =>
     generateRandomColour()
   );
+  const [speed, setSpeed] = useState<number>(() => generateSpeed());
   const circleRef = useRef<HTMLDivElement>(null);
 
-  console.log(bgColour);
   function randx() {
     return gsap.utils.random(0, maxX);
   }
@@ -46,26 +48,44 @@ const Circle: React.FC<CircleProps> = ({
       { x: maxX, y: randy() },
       { x: randx(), y: maxY },
     ];
-    let filteredList = [...randomList];
-    if (lastFinal !== null) {
-      filteredList = [...randomList].filter(
-        (item) => item.x !== lastFinal.x || item.y !== lastFinal.y
-      );
+    let filteredList: { x: number; y: number }[] = [...randomList];
+
+    if (lastFinal.x || lastFinal.y) {
+      filteredList = filteredList.reduce((finalList, item) => {
+        if (
+          (lastFinal.x !== 0 || item.x !== 0) &&
+          (lastFinal.y !== 0 || item.y !== 0) &&
+          (lastFinal.x !== maxX || item.x !== maxX) &&
+          (lastFinal.y !== maxY || item.y !== maxY)
+        ) {
+          finalList.push(item);
+        }
+        return finalList;
+      }, [] as { x: number; y: number }[]);
     }
-    const final = filteredList[Math.floor(gsap.utils.random(0, 4))];
-    console.log(final);
+    const final =
+      filteredList[Math.floor(gsap.utils.random(0, filteredList.length))];
+
+    const time = () => {
+      return (
+        Math.sqrt((final.x - lastFinal.x) ** 2 + (final.y - lastFinal.y) ** 2) /
+        speed
+      );
+    };
+
+    // 時間 = 距離 / 速度
 
     gsap.to(circleRef.current, {
       ...final,
-      duration: 3,
+      duration: time(),
       ease: "none",
       onComplete: wander,
     });
+    lastFinal = final;
   };
   let flag = true;
   useEffect(() => {
     if (flag) {
-      console.log(name, x, y, diameter, maxX, maxY);
       wander(); // 开始球的随机移动
       flag = false;
     }
