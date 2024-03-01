@@ -2,13 +2,8 @@
 import React, { useState, useEffect } from "react";
 import {
   collection,
-  addDoc,
-  getDoc,
   QuerySnapshot,
-  query,
   onSnapshot,
-  deleteDoc,
-  doc,
   Firestore,
   getFirestore,
   DocumentData,
@@ -22,7 +17,7 @@ interface Items {
   price: string;
 }
 
-export default function Home() {
+export default function Add() {
   const [items, setItems] = useState<Items[]>([]);
   const [newItem, setNewItem] = useState<Items>({
     id: "",

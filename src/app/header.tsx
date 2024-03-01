@@ -40,19 +40,19 @@ const Header: React.FC = () => {
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          <Link href="/features">
+          <Link href="/add">
             <div className="text-sm font-semibold leading-6 text-slate-50 hover:text-slate-400">
-              Features
+              CRUD Items
             </div>
           </Link>
-          <Link href="/marketplace">
+          <Link href="/circle">
             <div className="text-sm font-semibold leading-6 text-slate-50 hover:text-slate-400">
-              Marketplace
+              Circle
             </div>
           </Link>
-          <Link href="/company">
+          <Link href="/guess">
             <div className="text-sm font-semibold leading-6 text-slate-50 hover:text-slate-400">
-              Company
+              Guess
             </div>
           </Link>
         </div>
@@ -69,9 +69,8 @@ const Header: React.FC = () => {
           </Link>
         </div>
       </nav>
-      <div
+      <dialog
         className={`lg:hidden ${isopen ? "block" : "hidden"}`}
-        role="dialog"
         aria-modal="true"
       >
         {/* Background backdrop, show/hide based on slide-over state. */}
@@ -103,23 +102,28 @@ const Header: React.FC = () => {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                <Link href="#">
+                <Link href="/add">
                   <div className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-50 hover:text-slate-400">
-                    Features
+                    CRUD Items
                   </div>
                 </Link>
-                <Link href="#">
+                <Link href="/circle">
                   <div className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-50 hover:text-slate-400">
-                    Marketplace
+                    Circle
                   </div>
                 </Link>
-                <Link href="#">
+                <Link href="/guess">
                   <div className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-50 hover:text-slate-400">
-                    Company
+                    Guess
                   </div>
                 </Link>
               </div>
               <div className="py-6">
+                <Link href="/signup">
+                  <div className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-slate-50 hover:text-slate-400">
+                    Sign up
+                  </div>
+                </Link>
                 <Link href="/signin">
                   <div className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-slate-50 hover:text-slate-400">
                     Log in
@@ -129,7 +133,7 @@ const Header: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+      </dialog>
     </header>
   );
 };
